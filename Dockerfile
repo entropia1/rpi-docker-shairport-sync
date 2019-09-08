@@ -1,11 +1,14 @@
 ## This file was forked from kevineye/docker-shairport-sync
 
 FROM hypriot/rpi-alpine 
-MAINTAINER @protenhan
 
 ARG SHAIRPORT_VERSION=$SHAIRPORT_VERSION
 
-RUN apk -U add \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
+ && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+# && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk --update upgrade \
+ && apk -U add \
         git \
         build-base \
         autoconf \
@@ -18,6 +21,7 @@ RUN apk -U add \
         soxr-dev \
         avahi-dev \
         libconfig-dev \
+        alsa-plugins-pulse \
 
  && cd /root \
  && git clone https://github.com/mikebrady/shairport-sync.git \
